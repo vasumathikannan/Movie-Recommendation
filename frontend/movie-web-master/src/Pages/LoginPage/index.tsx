@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
-import image from '../../assets/blurry-developing-photos-darkroom.jpg';
+import image from '../../assets/login.avif';
 
 type LoginValues = {
     email: string;

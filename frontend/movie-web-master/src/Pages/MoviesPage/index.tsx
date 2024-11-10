@@ -28,6 +28,7 @@ const MovieSearch: React.FC = () => {
   const [language, setLanguage] = useState('');
   const [genre, setGenre] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [mood, setMood] = useState('');
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -59,7 +60,35 @@ const MovieSearch: React.FC = () => {
       setLoading(true);
       setError('');
       let url = `https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_API_KEY}&sort_by=popularity.desc`;
-
+      if (mood) {
+        const moodGenreMap: { [key: string]: string } = {
+          happy: '35',           
+          sad: '18',            
+          excited: '28',         
+          romantic: '10749',    
+          nostalgic: '10751',    
+          adventurous: '12',    
+          curious: '99',        
+          calm: '16',           
+          mysterious: '9648',    
+          tense: '53',           
+      
+          
+          happy_excited: '35,28',         
+          sad_romantic: '18,10749',       
+          nostalgic_curious: '10751,99',  
+          adventurous_mysterious: '12,9648', 
+          calm_romantic: '16,10749',     
+          tense_mysterious: '53,9648',   
+          excited_adventurous: '28,12',  
+          sad_calm: '18,16',              
+        };
+      
+        if (moodGenreMap[mood]) {
+          url += `&with_genres=${moodGenreMap[mood]}`;
+        }
+      }
+      
       if (searchQuery) {
         url = `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${searchQuery}`;
       } else {
@@ -151,6 +180,7 @@ const MovieSearch: React.FC = () => {
       console.error('Error submitting command:', error);
     }
   };
+  
 
   useEffect(() => {
     fetchMovies();
@@ -196,6 +226,34 @@ const MovieSearch: React.FC = () => {
                 </option>
               ))}
             </select>
+            <select
+  value={mood}
+  onChange={(e) => setMood(e.target.value)}
+  className="border rounded py-2 px-4"
+>
+  <option value="">Select Mood</option>
+  <option value="happy">Happy</option>
+  <option value="sad">Sad</option>
+  <option value="excited">Excited</option>
+  <option value="romantic">Romantic</option>
+  <option value="nostalgic">Nostalgic</option>
+  <option value="adventurous">Adventurous</option>
+  <option value="curious">Curious</option>
+  <option value="calm">Calm</option>
+  <option value="mysterious">Mysterious</option>
+  <option value="tense">Tense</option>
+  
+  {/* Combined Moods */}
+  <option value="happy_excited">Happy & Excited</option>
+  <option value="sad_romantic">Sad & Romantic</option>
+  <option value="nostalgic_curious">Nostalgic & Curious</option>
+  <option value="adventurous_mysterious">Adventurous & Mysterious</option>
+  <option value="calm_romantic">Calm & Romantic</option>
+  <option value="tense_mysterious">Tense & Mysterious</option>
+  <option value="excited_adventurous">Excited & Adventurous</option>
+  <option value="sad_calm">Sad & Calm</option>
+</select>
+
             <button type="submit" className="bg-red-500 text-white py-2 px-4 rounded">Search</button>
           </form>
         </div>
@@ -273,6 +331,7 @@ const MovieSearch: React.FC = () => {
       </div>
     </div>
   );
-};  
+};
 
-export default MovieSearch;  
+export default MovieSearch;
+

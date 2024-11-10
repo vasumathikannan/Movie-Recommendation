@@ -36,7 +36,7 @@ const Navbar: React.FC = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="logo text-5xl font-bold text-white">
-            MoVIEMate
+          POPCORNpick
           </Link>
 
           {/* Navigation links for large screens */}
@@ -62,6 +62,8 @@ const Navbar: React.FC = () => {
                 <button className="text-white text-4xl hover:text-red-600">Login</button>
               </Link>
             )}
+
+           
           </div>
 
           {/* Mobile menu button */}
@@ -96,6 +98,11 @@ const Navbar: React.FC = () => {
               <button className="block w-full text-left text-2xl py-2 px-4 hover:bg-red-600">Login</button>
             </Link>
           )}
+          
+          {/* Admin Link for mobile */}
+          <Link to="/admin" onClick={toggleMenu}>
+            <button className="block w-full text-left text-2xl py-2 px-4 hover:bg-red-600">Admin</button>
+          </Link>
         </div>
       )}
     </div>
